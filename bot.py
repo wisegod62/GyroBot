@@ -66,6 +66,15 @@ async def sexuality_autocomplete(
         if current.lower() in s
     ][:25]
 
+async def pronouns_autocomplete(
+    interaction: discord.Interaction, current: str
+) -> list[app_commands.Choice[str]]:
+    return [
+        app_commands.Choice(name=p.title(), value=p)
+        for p in PRONOUNS.keys()
+        if current.lower() in p
+    ][:25]
+
 
 # --- EXISTING COMMAND ---
 
