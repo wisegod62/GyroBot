@@ -196,7 +196,9 @@ async def view_profile(interaction: discord.Interaction, user: discord.User = No
     color="Hex color, e.g. #FF69B4",
 )
 @app_commands.autocomplete(
-    gender=gender_autocomplete, sexuality=sexuality_autocomplete
+    gender=gender_autocomplete,
+    sexuality=sexuality_autocomplete,
+    pronouns=pronouns_autocomplete
 )
 async def update_profile(
     interaction: discord.Interaction,
