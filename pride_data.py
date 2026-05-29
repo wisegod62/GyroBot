@@ -68,6 +68,15 @@ SEXUALITIES = {
         "definition": "An orientation describing attraction to people regardless of their gender identity.",
         "color": 0xFF007F,  # Hot Pink
     },
+    "graysexual": {
+        "definition": "Graysexual (or greysexual) is an identity on the asexual spectrum. Graysexual people experience sexual attraction rarely, weakly, infrequently, or only under specific circumstances.",
+        "color": 0xA9A9A9,
+    },
+    
+    "demisexual": {
+        "definition": "Demisexual is an identity on the asexual spectrum. Demisexual people typically do not experience sexual attraction until they have formed a strong emotional bond with someone.",
+        "color": 0x6E6E6E,
+    },
 }
 
 PRONOUNS = {
