@@ -5,7 +5,6 @@ import os
 import discord
 from discord import app_commands
 from dotenv import load_dotenv
-# Make sure pride_data.py is in the same folder!
 from pride_data import GENDERS, SEXUALITIES
 
 load_dotenv()
@@ -31,8 +30,6 @@ class MyBot(discord.Client):
 
     def __init__(self):
         intents = discord.Intents.default()
-        # Message content is not needed for slash commands,
-        # but default intents are perfect here.
         super().__init__(intents=intents)
         self.tree = app_commands.CommandTree(self)
 
