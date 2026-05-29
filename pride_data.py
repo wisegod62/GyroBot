@@ -33,6 +33,15 @@ GENDERS = {
         "definition": "Short for transmasculine. An umbrella term for transgender individuals who were assigned female at birth but identify more closely with masculinity or manhood.",
         "color": 0x60AFFF,  # Soft Pastel Blue
     },
+    "genderqueer": {
+        "definition": "Genderqueer is a gender identity used by people whose experience of gender falls outside traditional categories of exclusively male or female. Genderqueer people may identify with multiple genders, no gender, or a unique gender experience.",
+        "color": 0x9C59D1,
+    },
+    
+    "questioning": {
+        "definition": "Questioning describes someone who is exploring or unsure of their gender identity. A questioning person may be learning more about their relationship with gender and may or may not eventually adopt a specific label.",
+        "color": 0x808080,
+    },
 }
 
 SEXUALITIES = {
@@ -76,6 +85,15 @@ SEXUALITIES = {
     "demisexual": {
         "definition": "Demisexual is an identity on the asexual spectrum. Demisexual people typically do not experience sexual attraction until they have formed a strong emotional bond with someone.",
         "color": 0x6E6E6E,
+    },
+    "queer": {
+        "definition": "Queer is a broad and inclusive term used by some people whose sexual orientation, romantic orientation, gender identity, or overall experience falls outside traditional norms. Many people use queer as an umbrella term rather than a more specific label.",
+        "color": 0xB57EDC,
+    },
+    
+    "questioning": {
+        "definition": "Questioning describes someone who is exploring or unsure of their sexual or romantic orientation. A questioning person may be learning more about themselves and may or may not eventually adopt a specific label.",
+        "color": 0x808080,
     },
 }
 
