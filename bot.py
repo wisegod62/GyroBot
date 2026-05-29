@@ -145,13 +145,16 @@ async def view_profile(interaction: discord.Interaction, user: discord.User = No
         return
 
     profile = user_profiles[user_id]
-
-    # Dynamically match border color to their gender choice
-    embed_color = 0x9B59B6
+    
     saved_gender = profile.get("gender", "").lower()
-    if saved_gender in GENDERS:
-        embed_color = GENDERS[saved_gender]["color"]
 
+    if "card_color" in profile:
+        embed_color = profile["card_color"]
+    elif saved_gender in GENDERS:
+        embed_color = GENDERS[saved_gender]["color"]
+    else:
+        embed_color = 0x9B59B6
+    
     embed = discord.Embed(
         title=f"📛 {target_user.display_name}'s Pride Card", color=embed_color
     )
@@ -181,6 +184,7 @@ async def view_profile(interaction: discord.Interaction, user: discord.User = No
     pronouns="Example: they/them, she/her",
     gender="Your gender identity",
     sexuality="Your sexual/romantic orientation",
+    color="Hex color, e.g. #FF69B4",
 )
 @app_commands.autocomplete(
     gender=gender_autocomplete, sexuality=sexuality_autocomplete
@@ -190,24 +194,44 @@ async def update_profile(
     pronouns: str = None,
     gender: str = None,
     sexuality: str = None,
+    color: str = None,
 ):
     user_id = str(interaction.user.id)
 
     if user_id not in user_profiles:
         user_profiles[user_id] = {
+            "username": interaction.user.name,
             "pronouns": "Not Set",
             "gender": "Not Set",
             "sexuality": "Not Set",
+            "card_color": 0x9B59B6,
         }
+
+    user_profiles[user_id]["username"] = interaction.user.name
 
     if pronouns:
         user_profiles[user_id]["pronouns"] = pronouns
+
     if gender:
         user_profiles[user_id]["gender"] = gender.lower()
+
     if sexuality:
         user_profiles[user_id]["sexuality"] = sexuality.lower()
 
+    if color:
+        try:
+            user_profiles[user_id]["card_color"] = int(
+                color.replace("#", ""), 16
+            )
+        except ValueError:
+            await interaction.response.send_message(
+                "Invalid color. Use a hex code like #FF69B4.",
+                ephemeral=True,
+            )
+            return
+
     save_profiles()
+
     await interaction.response.send_message(
         "✅ Your identity profile card has been successfully updated!",
         ephemeral=True,
