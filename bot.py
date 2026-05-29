@@ -5,7 +5,7 @@ import os
 import discord
 from discord import app_commands
 from dotenv import load_dotenv
-from pride_data import GENDERS, SEXUALITIES
+from pride_data import GENDERS, SEXUALITIES, PRONOUNS
 
 load_dotenv()
 
@@ -72,7 +72,7 @@ async def pronouns_autocomplete(
     return [
         app_commands.Choice(name=p.title(), value=p)
         for p in PRONOUNS.keys()
-        if current.lower() in p
+        if current.lower() in p.lower()
     ][:25]
 
 
