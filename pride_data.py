@@ -70,3 +70,13 @@ SEXUALITIES = {
     },
 }
 
+PRONOUNS = {
+    "He/Him"
+    "She/Her"
+    "They/Them"
+    "He/They"
+    "She/They"
+    "Any/All"
+    "Ze/Zir/Zirs"
+    "Xe/Xem/Xes"
+}
