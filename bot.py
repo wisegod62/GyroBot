@@ -1,0 +1,222 @@
+#!/usr/bin/env python3
+
+import json
+import os
+import discord
+from discord import app_commands
+from dotenv import load_dotenv
+# Make sure pride_data.py is in the same folder!
+from pride_data import GENDERS, SEXUALITIES
+
+load_dotenv()
+
+DISCORD_BOT_TOKEN = os.getenv("DISCORD_BOT_TOKEN")
+PROFILE_FILE = "user_profiles.json"
+
+# Load saved profiles on startup, or create an empty dictionary
+if os.path.exists(PROFILE_FILE):
+    with open(PROFILE_FILE, "r") as f:
+        user_profiles = json.load(f)
+else:
+    user_profiles = {}
+
+
+def save_profiles():
+    """Helper to write profile data to the disk safely."""
+    with open(PROFILE_FILE, "w") as f:
+        json.dump(user_profiles, f, indent=4)
+
+
+class MyBot(discord.Client):
+
+    def __init__(self):
+        intents = discord.Intents.default()
+        # Message content is not needed for slash commands,
+        # but default intents are perfect here.
+        super().__init__(intents=intents)
+        self.tree = app_commands.CommandTree(self)
+
+    async def on_ready(self):
+        print(f"Logged in as {self.user}")
+        try:
+            synced = await self.tree.sync()
+            print(f"Synced {len(synced)} command(s)")
+        except Exception as e:
+            print(f"Failed to sync commands: {e}")
+
+
+bot = MyBot()
+
+# --- AUTOCOMPLETE HELPERS ---
+
+
+async def gender_autocomplete(
+    interaction: discord.Interaction, current: str
+) -> list[app_commands.Choice[str]]:
+    return [
+        app_commands.Choice(name=g.title(), value=g)
+        for g in GENDERS.keys()
+        if current.lower() in g
+    ][:25]
+
+
+async def sexuality_autocomplete(
+    interaction: discord.Interaction, current: str
+) -> list[app_commands.Choice[str]]:
+    return [
+        app_commands.Choice(name=s.title(), value=s)
+        for s in SEXUALITIES.keys()
+        if current.lower() in s
+    ][:25]
+
+
+# --- EXISTING COMMAND ---
+
+
+@bot.tree.command(
+    name="transphobia", description="What is it? Run the command to see!"
+)
+async def transphobia(interaction: discord.Interaction):
+    await interaction.response.send_message(
+        "Transphobia or transmisia is set of deeply rooted negative beliefs about gender nonconforming people. "
+        "It manifests as stigmatizing or denying the identities (including pronouns) of trans, nonbinary and "
+        "otherwise gender nonconforming people. (Sources: Planned Parenthood, PFLAG)"
+    )
+
+
+# --- NEW PRIDEBOT LOOKUPS ---
+
+
+@bot.tree.command(name="gender", description="Look up an LGBTQ+ gender identity")
+@app_commands.autocomplete(identity=gender_autocomplete)
+async def gender_lookup(interaction: discord.Interaction, identity: str):
+    term = identity.lower().strip()
+    if term in GENDERS:
+        data = GENDERS[term]
+        embed = discord.Embed(
+            title=f"✨ Gender Identity: {identity.title()}",
+            description=data["definition"],
+            color=data["color"],
+        )
+        await interaction.response.send_message(embed=embed)
+    else:
+        await interaction.response.send_message(
+            f"❌ `{identity}` not found in database.", ephemeral=True
+        )
+
+
+@bot.tree.command(
+    name="sexuality", description="Look up an LGBTQ+ sexual or romantic orientation"
+)
+@app_commands.autocomplete(orientation=sexuality_autocomplete)
+async def sexuality_lookup(interaction: discord.Interaction, orientation: str):
+    term = orientation.lower().strip()
+    if term in SEXUALITIES:
+        data = SEXUALITIES[term]
+        embed = discord.Embed(
+            title=f"🌈 Sexuality Orientation: {orientation.title()}",
+            description=data["definition"],
+            color=data["color"],
+        )
+        await interaction.response.send_message(embed=embed)
+    else:
+        await interaction.response.send_message(
+            f"❌ `{orientation}` not found in database.", ephemeral=True
+        )
+
+
+# --- IDENTITY PROFILE SYSTEM ---
+
+
+@bot.tree.command(
+    name="profile", description="View your identity card or another user's card"
+)
+@app_commands.describe(user="The user whose profile you want to view")
+async def view_profile(interaction: discord.Interaction, user: discord.User = None):
+    target_user = user or interaction.user
+    user_id = str(target_user.id)
+
+    if user_id not in user_profiles:
+        description = (
+            f"This user hasn't set up their profile cards yet.\nUse `/profile_update` to get started!"
+            if user
+            else "You haven't set up your profile card yet!\nUse `/profile_update` to add your identities."
+        )
+        await interaction.response.send_message(
+            description, ephemeral=True if not user else False
+        )
+        return
+
+    profile = user_profiles[user_id]
+
+    # Dynamically match border color to their gender choice
+    embed_color = 0x9B59B6
+    saved_gender = profile.get("gender", "").lower()
+    if saved_gender in GENDERS:
+        embed_color = GENDERS[saved_gender]["color"]
+
+    embed = discord.Embed(
+        title=f"📛 {target_user.display_name}'s Pride Card", color=embed_color
+    )
+    embed.set_thumbnail(url=target_user.display_avatar.url)
+    embed.add_field(
+        name="🗣️ Pronouns", value=profile.get("pronouns", "Not Set"), inline=False
+    )
+    embed.add_field(
+        name="✨ Gender Identity",
+        value=profile.get("gender", "Not Set").title(),
+        inline=True,
+    )
+    embed.add_field(
+        name="🌈 Orientation",
+        value=profile.get("sexuality", "Not Set").title(),
+        inline=True,
+    )
+
+    await interaction.response.send_message(embed=embed)
+
+
+@bot.tree.command(
+    name="profile_update",
+    description="Set up or edit your saved identities and pronouns",
+)
+@app_commands.describe(
+    pronouns="Example: they/them, she/her",
+    gender="Your gender identity",
+    sexuality="Your sexual/romantic orientation",
+)
+@app_commands.autocomplete(
+    gender=gender_autocomplete, sexuality=sexuality_autocomplete
+)
+async def update_profile(
+    interaction: discord.Interaction,
+    pronouns: str = None,
+    gender: str = None,
+    sexuality: str = None,
+):
+    user_id = str(interaction.user.id)
+
+    if user_id not in user_profiles:
+        user_profiles[user_id] = {
+            "pronouns": "Not Set",
+            "gender": "Not Set",
+            "sexuality": "Not Set",
+        }
+
+    if pronouns:
+        user_profiles[user_id]["pronouns"] = pronouns
+    if gender:
+        user_profiles[user_id]["gender"] = gender.lower()
+    if sexuality:
+        user_profiles[user_id]["sexuality"] = sexuality.lower()
+
+    save_profiles()
+    await interaction.response.send_message(
+        "✅ Your identity profile card has been successfully updated!",
+        ephemeral=True,
+    )
+
+
+# Start the bot
+bot.run(DISCORD_BOT_TOKEN)
+
