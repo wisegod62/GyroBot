@@ -6,6 +6,7 @@ import discord
 from discord import app_commands
 from dotenv import load_dotenv
 from pride_data import GENDERS, SEXUALITIES, PRONOUNS, QUEER_HISTORY, FLAGS
+from flag_generate import generate_flag
 
 
 load_dotenv()
