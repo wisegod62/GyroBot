@@ -75,6 +75,15 @@ async def pronouns_autocomplete(
         if current.lower() in p.lower()
     ][:25]
 
+async def queer_history_autocomplete(
+    interaction: discord.Interaction, current: str
+) -> list[app_commands.Choice[str]]:
+    return [
+        app_commands.Choice(name=q.title(), value=q)
+        for q in QUEER-HISTORY.keys()
+        if current.lower() in q.lower()
+    ][:25]
+
 
 # --- EXISTING COMMAND ---
 
@@ -93,7 +102,9 @@ async def transphobia(interaction: discord.Interaction):
 # --- NEW PRIDEBOT LOOKUPS ---
 
 
-@bot.tree.command(name="gender", description="Look up an LGBTQ+ gender identity")
+@bot.tree.command(
+    name="gender", description="Look up an LGBTQ+ gender identity"
+)
 @app_commands.autocomplete(identity=gender_autocomplete)
 async def gender_lookup(interaction: discord.Interaction, identity: str):
     term = identity.lower().strip()
@@ -128,6 +139,26 @@ async def sexuality_lookup(interaction: discord.Interaction, orientation: str):
     else:
         await interaction.response.send_message(
             f"❌ `{orientation}` not found in database.", ephemeral=True
+        )
+
+
+@bot.tree.command(
+    name="queer-history", description="Look up an LGBTQ+ historical figure"
+)
+@app_commands.autocomplete(orientation=sexuality_autocomplete)
+async def queer_history_lookup(interaction: discord.Interaction, queer-history: str):
+    term = queer-history.lower().strip()
+    if term in QUEER-HISTORY:
+        data = QUEER-HISTORY[term]
+        embed = discord.Embed(
+            title=f"🍎 Queer Historical Figure: {queer-history.title()}",
+            description=data["definition"],
+            color=data["color"],
+        )
+        await interaction.response.send_message(embed=embed)
+    else:
+        await interaction.response.send_message(
+            f"❌ `{queer-history}` not found in database.", ephemeral=True
         )
 
 
