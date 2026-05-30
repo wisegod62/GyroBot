@@ -57,8 +57,10 @@ bot = MyBot()
 blacklist_group = app_commands.Group(
     name="blacklist",
     description="Manage the blacklist"
+    default_permissions=discord.Permissions(
+        manage_guild=True
 )
-
+    
 bot.tree.add_command(blacklist_group)
 
 # --- AUTOCOMPLETE HELPERS ---
@@ -170,7 +172,7 @@ async def queer_history_lookup(interaction: discord.Interaction, queer_history: 
         embed = discord.Embed(
             title=f"🍎 Queer Historical Figure: {queer_history.title()}",
             description=data["definition"],
-            color=data["color"],
+            color=data.get("color", 0x9B59B6),
         )
         await interaction.response.send_message(embed=embed)
     else:
