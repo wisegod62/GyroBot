@@ -80,7 +80,7 @@ async def queer_history_autocomplete(
 ) -> list[app_commands.Choice[str]]:
     return [
         app_commands.Choice(name=q.title(), value=q)
-        for q in QUEER-HISTORY.keys()
+        for q in QUEER_HISTORY.keys()
         if current.lower() in q.lower()
     ][:25]
 
@@ -146,19 +146,19 @@ async def sexuality_lookup(interaction: discord.Interaction, orientation: str):
     name="queer-history", description="Look up an LGBTQ+ historical figure"
 )
 @app_commands.autocomplete(orientation=sexuality_autocomplete)
-async def queer_history_lookup(interaction: discord.Interaction, queer-history: str):
+async def queer_history_lookup(interaction: discord.Interaction, queer_history: str):
     term = queer-history.lower().strip()
-    if term in QUEER-HISTORY:
-        data = QUEER-HISTORY[term]
+    if term in QUEER_HISTORY:
+        data = QUEER_HISTORY[term]
         embed = discord.Embed(
-            title=f"🍎 Queer Historical Figure: {queer-history.title()}",
+            title=f"🍎 Queer Historical Figure: {queer_history.title()}",
             description=data["definition"],
             color=data["color"],
         )
         await interaction.response.send_message(embed=embed)
     else:
         await interaction.response.send_message(
-            f"❌ `{queer-history}` not found in database.", ephemeral=True
+            f"❌ `{queer_history}` not found in database.", ephemeral=True
         )
 
 

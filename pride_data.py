@@ -108,7 +108,7 @@ PRONOUNS = {
     "Xe/Xem/Xes": {}
 }
 
-QUEER-HISTORY = {
+QUEER_HISTORY = {
     "Alan Turing": {
         "definition": "Alan Turing was a genius whose WWII codebreaking saved millions of lives. He accidentally outed himself, and his security clearance was stripped. He was also forced to be subject to chemical castration. Because of this, he later commited suicide."
     }
