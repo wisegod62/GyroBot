@@ -84,9 +84,6 @@ async def queer_history_autocomplete(
         if current.lower() in q.lower()
     ][:25]
 
-from PIL import Image, ImageDraw
-import io
-
 async def flag_autocomplete(
     interaction: discord.Interaction, current: str
 ) -> list[app_commands.Choice[str]]:
@@ -95,10 +92,6 @@ async def flag_autocomplete(
         for f in FLAGS.keys()
         if current.lower() in f.lower()
     ][:25]
-
-from PIL import Image, ImageDraw
-import io
-
 
 
 # --- EXISTING COMMAND ---
