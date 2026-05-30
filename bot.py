@@ -5,7 +5,8 @@ import os
 import discord
 from discord import app_commands
 from dotenv import load_dotenv
-from pride_data import GENDERS, SEXUALITIES, PRONOUNS, QUEER_HISTORY
+from pride_data import GENDERS, SEXUALITIES, PRONOUNS, QUEER_HISTORY, FLAGS
+
 
 load_dotenv()
 
@@ -82,6 +83,22 @@ async def queer_history_autocomplete(
         if current.lower() in q.lower()
     ][:25]
 
+from PIL import Image, ImageDraw
+import io
+
+async def flags_autocomplete(
+    interaction: discord.Interaction, current: str
+) -> list[app_commands.Choice[str]]:
+    return [
+        app_commands.Choice(name=f.title(), value=f)
+        for f in FLAGS.keys()
+        if current.lower() in f.lower()
+    ][:25]
+
+from PIL import Image, ImageDraw
+import io
+
+
 
 # --- EXISTING COMMAND ---
 
@@ -97,8 +114,7 @@ async def transphobia(interaction: discord.Interaction):
     )
 
 
-# --- NEW PRIDEBOT LOOKUPS ---
-
+# --- LOOKUPS ---
 
 @bot.tree.command(
     name="gender", description="Look up an LGBTQ+ gender identity"
@@ -158,6 +174,41 @@ async def queer_history_lookup(interaction: discord.Interaction, queer_history: 
         await interaction.response.send_message(
             f"❌ `{queer_history}` not found in database.", ephemeral=True
         )
+
+@bot.tree.command(
+    name="flag",
+    description="Look up a pride flag"
+)
+@app_commands.autocomplete(flag=flag_autocomplete)
+async def flag_lookup(interaction: discord.Interaction, flag: str):
+    term = flag.lower().strip()
+
+    if term not in FLAGS:
+        await interaction.response.send_message(
+            f"❌ `{flag}` not found in database.",
+            ephemeral=True
+        )
+        return
+
+    data = FLAGS[term]
+
+    # Generate image
+    image_buffer = generate_flag(data["colors"])
+    file = discord.File(image_buffer, filename="flag.png")
+
+    # Build embed
+    embed = discord.Embed(
+        title=f"🏳️ {flag.title()} Flag",
+        description=data.get("description", "No description available."),
+        color=0x9B59B6
+    )
+
+    embed.set_image(url="attachment://flag.png")
+
+    await interaction.response.send_message(
+        embed=embed,
+        file=file
+    )
 
 
 # --- IDENTITY PROFILE SYSTEM ---
