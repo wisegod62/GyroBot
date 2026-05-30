@@ -124,55 +124,217 @@ QUEER_HISTORY = {
 }
 
 FLAGS = {
+
 	"transgender": {
+		"description": "A flag representing transgender people.",
+		"creator": "Monica Helms",
+		"year": 1999,
+		"aliases": ["trans"],
 		"type": "stripes",
-		"colors": ["#5BCEFA", "#F5A9B8", "#FFFFFF", "#F5A9B8", "#5BCEFA"]
+		"colors": [
+			"#5BCEFA",
+			"#F5A9B8",
+			"#FFFFFF",
+			"#F5A9B8",
+			"#5BCEFA"
+		]
 	},
 
 	"nonbinary": {
+		"description": "A flag representing nonbinary identities.",
+		"creator": "Kye Rowan",
+		"year": 2014,
+		"aliases": ["nb"],
 		"type": "stripes",
-		"colors": ["#FFF430", "#FFFFFF", "#9C59D1", "#000000"]
+		"colors": [
+			"#FFF430",
+			"#FFFFFF",
+			"#9C59D1",
+			"#000000"
+		]
+	},
+
+	"agender": {
+		"description": "A flag representing agender people.",
+		"creator": "Salem X",
+		"year": 2014,
+		"aliases": [],
+		"type": "stripes",
+		"colors": [
+			"#000000",
+			"#B9B9B9",
+			"#FFFFFF",
+			"#B8F483",
+			"#FFFFFF",
+			"#B9B9B9",
+			"#000000"
+		]
 	},
 
 	"bisexual": {
+		"description": "A flag representing bisexual attraction.",
+		"creator": "Michael Page",
+		"year": 1998,
+		"aliases": ["bi"],
 		"type": "stripes",
-		"colors": ["#D60270", "#9B4F96", "#0038A8"],
-		"ratios": [0.4, 0.2, 0.4]
+		"colors": [
+			"#D60270",
+			"#9B4F96",
+			"#0038A8"
+		],
+		"ratios": [2, 1, 2]
 	},
 
 	"pansexual": {
+		"description": "A flag representing attraction regardless of gender.",
+		"creator": "Unknown",
+		"year": 2010,
+		"aliases": ["pan"],
 		"type": "stripes",
-		"colors": ["#FF1B8D", "#FFD900", "#1BB3FF"]
+		"colors": [
+			"#FF218C",
+			"#FFD800",
+			"#21B1FF"
+		]
 	},
 
 	"asexual": {
+		"description": "A flag representing asexuality.",
+		"creator": "AVEN Community",
+		"year": 2010,
+		"aliases": ["ace"],
 		"type": "stripes",
-		"colors": ["#000000", "#A3A3A3", "#FFFFFF", "#810081"]
+		"colors": [
+			"#000000",
+			"#A3A3A3",
+			"#FFFFFF",
+			"#800080"
+		]
 	},
 
 	"aromantic": {
+		"description": "A flag representing aromantic people.",
+		"creator": "Cameron Whimsy",
+		"year": 2014,
+		"aliases": ["aro"],
 		"type": "stripes",
-		"colors": ["#3DA542", "#A7D379", "#FFFFFF", "#A9A9A9", "#000000"]
+		"colors": [
+			"#3DA542",
+			"#A7D379",
+			"#FFFFFF",
+			"#A9A9A9",
+			"#000000"
+		]
 	},
 
-	"genderqueer": {
+	"aroace": {
+		"description": "A flag representing people who are both aromantic and asexual.",
+		"creator": "Sunset",
+		"year": 2018,
+		"aliases": ["aro-ace"],
 		"type": "stripes",
-		"colors": ["#B57EDC", "#FFFFFF", "#4A8123"]
+		"colors": [
+			"#E28C00",
+			"#ECCB00",
+			"#FFFFFF",
+			"#62AEDC",
+			"#203856"
+		]
 	},
 
 	"lesbian": {
+		"description": "The sunset lesbian flag.",
+		"creator": "Emily Gwen",
+		"year": 2018,
+		"aliases": [],
 		"type": "stripes",
-		"colors": ["#D52D00", "#FF9A56", "#FFFFFF", "#D362A4", "#A30262"]
+		"colors": [
+			"#D52D00",
+			"#FF9A56",
+			"#FFFFFF",
+			"#D362A4",
+			"#A30262"
+		]
 	},
 
-	"progress_pride": {
-		"type": "composite",
-		"layers": [
+	"genderqueer": {
+		"description": "A flag representing genderqueer identities.",
+		"creator": "Marilyn Roxie",
+		"year": 2011,
+		"aliases": ["gq"],
+		"type": "stripes",
+		"colors": [
+			"#B57EDC",
+			"#FFFFFF",
+			"#4A8123"
+		]
+	},
+
+	"demisexual": {
+		"description": "A flag representing demisexual people.",
+		"creator": "AVEN Community",
+		"year": 2010,
+		"aliases": ["demi"],
+		"type": "svg",
+		"elements": [
 			{
-				"type": "overlay",
-				"kind": "triangle_left",
-				"color": "#000000",
-				"width_ratio": 0.45
+				"type": "rect",
+				"x": 0,
+				"y": 0,
+				"width": 900,
+				"height": 150,
+				"fill": "#FFFFFF"
+			},
+			{
+				"type": "rect",
+				"x": 0,
+				"y": 150,
+				"width": 900,
+				"height": 150,
+				"fill": "#800080"
+			},
+			{
+				"type": "rect",
+				"x": 0,
+				"y": 300,
+				"width": 900,
+				"height": 300,
+				"fill": "#A3A3A3"
+			},
+			{
+				"type": "polygon",
+				"points": [
+					(0, 0),
+					(300, 300),
+					(0, 600)
+				],
+				"fill": "#000000"
+			}
+		]
+	},
+
+	"intersex": {
+		"description": "The intersex pride flag.",
+		"creator": "Morgan Carpenter",
+		"year": 2013,
+		"aliases": [],
+		"type": "svg",
+		"elements": [
+			{
+				"type": "rect",
+				"x": 0,
+				"y": 0,
+				"width": 900,
+				"height": 600,
+				"fill": "#FFD800"
+			},
+			{
+				"type": "circle",
+				"cx": 450,
+				"cy": 300,
+				"r": 120,
+				"stroke": "#7902AA",
+				"stroke_width": 20
 			}
 		]
 	}
