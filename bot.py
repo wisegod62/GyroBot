@@ -145,7 +145,7 @@ async def sexuality_lookup(interaction: discord.Interaction, orientation: str):
 @bot.tree.command(
     name="queer-history", description="Look up an LGBTQ+ historical figure"
 )
-@app_commands.autocomplete(queer_history=-queer_history_autocomplete)
+@app_commands.autocomplete(queer_history=queer_history_autocomplete)
 async def queer_history_lookup(interaction: discord.Interaction, queer_history: str):
     term = queer-history.lower().strip()
     if term in QUEER_HISTORY:
