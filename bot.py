@@ -187,7 +187,7 @@ async def flag_lookup(interaction: discord.Interaction, flag: str):
     data = FLAGS[term]
 
     # Generate image
-    image_buffer = generate_flag(data["colors"])
+    image_buffer = generate_flag(data["svg"])
     file = discord.File(image_buffer, filename="flag.png")
 
     # Build embed
@@ -321,6 +321,9 @@ async def update_profile(
         "✅ Your identity profile card has been successfully updated!",
         ephemeral=True,
     )
+
+print([cmd.name for cmd in bot.tree.get_commands()])
+print(FLAGS.keys())
 
 # Start the bot
 bot.run(DISCORD_BOT_TOKEN)
