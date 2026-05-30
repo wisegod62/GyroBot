@@ -124,13 +124,56 @@ QUEER_HISTORY = {
 }
 
 FLAGS = {
-    "transgender": {
-        "colors": ["#5BCEFA", "#F5A9B8", "#FFFFFF", "#F5A9B8", "#5BCEFA"],
-        "description": "Transgender pride flag.",
-    },
+	"transgender": {
+		"type": "stripes",
+		"colors": ["#5BCEFA", "#F5A9B8", "#FFFFFF", "#F5A9B8", "#5BCEFA"]
+	},
 
-    "bisexual": {
-        "colors": ["#D60270", "#9B4F96", "#0038A8"],
-        "description": "Bisexual pride flag.",
-    }
+	"nonbinary": {
+		"type": "stripes",
+		"colors": ["#FFF430", "#FFFFFF", "#9C59D1", "#000000"]
+	},
+
+	"bisexual": {
+		"type": "stripes",
+		"colors": ["#D60270", "#9B4F96", "#0038A8"],
+		"ratios": [0.4, 0.2, 0.4]
+	},
+
+	"pansexual": {
+		"type": "stripes",
+		"colors": ["#FF1B8D", "#FFD900", "#1BB3FF"]
+	},
+
+	"asexual": {
+		"type": "stripes",
+		"colors": ["#000000", "#A3A3A3", "#FFFFFF", "#810081"]
+	},
+
+	"aromantic": {
+		"type": "stripes",
+		"colors": ["#3DA542", "#A7D379", "#FFFFFF", "#A9A9A9", "#000000"]
+	},
+
+	"genderqueer": {
+		"type": "stripes",
+		"colors": ["#B57EDC", "#FFFFFF", "#4A8123"]
+	},
+
+	"lesbian": {
+		"type": "stripes",
+		"colors": ["#D52D00", "#FF9A56", "#FFFFFF", "#D362A4", "#A30262"]
+	},
+
+	"progress_pride": {
+		"type": "composite",
+		"layers": [
+			{
+				"type": "overlay",
+				"kind": "triangle_left",
+				"color": "#000000",
+				"width_ratio": 0.45
+			}
+		]
+	}
 }
