@@ -270,49 +270,6 @@ FLAGS = {
 		]
 	},
 
-	"demisexual": {
-		"description": "A flag representing demisexual people.",
-		"creator": "AVEN Community",
-		"year": 2010,
-		"aliases": ["demi"],
-		"type": "svg",
-		"elements": [
-			{
-				"type": "rect",
-				"x": 0,
-				"y": 0,
-				"width": 900,
-				"height": 150,
-				"fill": "#FFFFFF"
-			},
-			{
-				"type": "rect",
-				"x": 0,
-				"y": 150,
-				"width": 900,
-				"height": 150,
-				"fill": "#800080"
-			},
-			{
-				"type": "rect",
-				"x": 0,
-				"y": 300,
-				"width": 900,
-				"height": 300,
-				"fill": "#A3A3A3"
-			},
-			{
-				"type": "polygon",
-				"points": [
-					(0, 0),
-					(300, 300),
-					(0, 600)
-				],
-				"fill": "#000000"
-			}
-		]
-	},
-
 	"intersex": {
 		"description": "The intersex pride flag.",
 		"creator": "Morgan Carpenter",
@@ -337,5 +294,161 @@ FLAGS = {
 				"stroke_width": 20
 			}
 		]
-	}
+	},
+
+    "demisexual": {
+        "description": "A flag representing demisexual people.",
+        "creator": "AVEN Community",
+        "year": 2010,
+        "aliases": ["demi"],
+        "type": "svg",
+        "elements": [
+
+            {
+                "type": "rect",
+                "x": 0,
+                "y": 0,
+                "width": 900,
+                "height": 225,
+                "fill": "#FFFFFF"
+            },
+
+            {
+                "type": "rect",
+                "x": 0,
+                "y": 225,
+                "width": 900,
+                "height": 150,
+                "fill": "#6E0170"
+            },
+
+            {
+                "type": "rect",
+                "x": 0,
+                "y": 375,
+                "width": 900,
+                "height": 225,
+                "fill": "#D2D2D2"
+            },
+
+            {
+                "type": "polygon",
+                "points": [
+                    [0, 0],
+                    [300, 300],
+                    [0, 600]
+                ],
+                "fill": "#000000"
+            }
+        ]
+    },
+
+    "progress_pride": {
+        "description": "The Progress Pride flag.",
+        "creator": "Daniel Quasar",
+        "year": 2018,
+        "aliases": ["progress"],
+        "type": "svg",
+        "elements": [
+
+            {
+                "type": "rect",
+                "x": 0,
+                "y": 0,
+                "width": 900,
+                "height": 100,
+                "fill": "#E40303"
+            },
+            {
+                "type": "rect",
+                "x": 0,
+                "y": 100,
+                "width": 900,
+                "height": 100,
+                "fill": "#FF8C00"
+            },
+            {
+                "type": "rect",
+                "x": 0,
+                "y": 200,
+                "width": 900,
+                "height": 100,
+                "fill": "#FFED00"
+            },
+            {
+                "type": "rect",
+                "x": 0,
+                "y": 300,
+                "width": 900,
+                "height": 100,
+                "fill": "#008026"
+            },
+            {
+                "type": "rect",
+                "x": 0,
+                "y": 400,
+                "width": 900,
+                "height": 100,
+                "fill": "#004DFF"
+            },
+            {
+                "type": "rect",
+                "x": 0,
+                "y": 500,
+                "width": 900,
+                "height": 100,
+                "fill": "#750787"
+            },
+
+            {
+                "type": "polygon",
+                "points": [
+                    [0, 0],
+                    [250, 300],
+                    [0, 600]
+                ],
+                "fill": "#000000"
+            },
+
+            {
+                "type": "polygon",
+                "points": [
+                    [0, 60],
+                    [190, 300],
+                    [0, 540]
+                ],
+                "fill": "#613915"
+            },
+
+            {
+                "type": "polygon",
+                "points": [
+                    [0, 120],
+                    [135, 300],
+                    [0, 480]
+                ],
+                "fill": "#5BCEFA"
+            },
+
+            {
+                "type": "polygon",
+                "points": [
+                    [0, 180],
+                    [90, 300],
+                    [0, 420]
+                ],
+                "fill": "#F5A9B8"
+            },
+
+            {
+                "type": "polygon",
+                "points": [
+                    [0, 240],
+                    [45, 300],
+                    [0, 360]
+                ],
+                "fill": "#FFFFFF"
+            }
+        ]
+    }
 }
