@@ -164,7 +164,7 @@ async def sexuality_lookup(interaction: discord.Interaction, orientation: str):
 )
 @app_commands.autocomplete(queer_history=queer_history_autocomplete)
 async def queer_history_lookup(interaction: discord.Interaction, queer_history: str):
-    term = queer_history.lower().strip()
+    term = queer_history.strip()
     if term in QUEER_HISTORY:
         data = QUEER_HISTORY[term]
         embed = discord.Embed(
