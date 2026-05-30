@@ -122,3 +122,15 @@ QUEER_HISTORY = {
         "definition": "Von Humboldt's sexuality was very unclear, but he may have been gay."
     },
 }
+
+FLAGS = {
+    "transgender": {
+        "colors": ["#5BCEFA", "#F5A9B8", "#FFFFFF", "#F5A9B8", "#5BCEFA"],
+        "description": "Transgender pride flag.",
+    },
+
+    "bisexual": {
+        "colors": ["#D60270", "#9B4F96", "#0038A8"],
+        "description": "Bisexual pride flag.",
+    }
+}
