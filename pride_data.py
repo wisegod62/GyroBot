@@ -105,20 +105,20 @@ PRONOUNS = {
     "She/They": {},
     "Any/All": {},
     "Ze/Zir/Zirs": {},
-    "Xe/Xem/Xes": {}
+    "Xe/Xem/Xes": {},
 }
 
 QUEER_HISTORY = {
     "Alan Turing": {
         "definition": "Alan Turing was a genius whose WWII codebreaking saved millions of lives. He accidentally outed himself, and his security clearance was stripped. He was also forced to be subject to chemical castration. Because of this, he later commited suicide."
-    }
+    },
     "Napoleon Bonaparte": {
         "definition": "There is no concrete evidence, but he was a very queer-friendly emperor and had a relationship with Tsar Alexander I that many percieve as homoerotic. He was married to women twice, so he may have been bisexual."
-    }
+    },
     "James Buchanan": {
         "definition": "He was the only US President to remain a bachelor. His letters were burned by his family but some remain, with William Rufus King. Their correspondence mimicks that of romantic couples of the time."
-    }
+    },
     "Alexander Von Humboldt": {
         "definition": "Von Humboldt's sexuality was very unclear, but he may have been gay."
-    }
+    },
 }
