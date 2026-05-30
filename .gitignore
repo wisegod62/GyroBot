@@ -1,4 +1,4 @@
 .env
 __pycache__
 user_profiles.json
-
+cache/
