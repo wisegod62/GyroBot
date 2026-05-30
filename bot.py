@@ -187,7 +187,7 @@ async def flag_lookup(interaction: discord.Interaction, flag: str):
     data = FLAGS[term]
 
     # Generate image
-    image_buffer = generate_flag(data["svg"])
+    image_buffer = generate_flag(data)
     file = discord.File(image_buffer, filename="flag.png")
 
     # Build embed
