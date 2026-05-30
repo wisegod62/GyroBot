@@ -309,7 +309,7 @@ FLAGS = {
                 "x": 0,
                 "y": 0,
                 "width": 900,
-                "height": 225,
+                "height": 250,
                 "fill": "#FFFFFF"
             },
 
@@ -318,7 +318,7 @@ FLAGS = {
                 "x": 0,
                 "y": 225,
                 "width": 900,
-                "height": 150,
+                "height": 100,
                 "fill": "#6E0170"
             },
 
@@ -327,7 +327,7 @@ FLAGS = {
                 "x": 0,
                 "y": 375,
                 "width": 900,
-                "height": 225,
+                "height": 250,
                 "fill": "#D2D2D2"
             },
 
@@ -335,7 +335,7 @@ FLAGS = {
                 "type": "polygon",
                 "points": [
                     [0, 0],
-                    [225, 300],
+                    [345, 300],
                     [0, 600]
                 ],
                 "fill": "#000000"
