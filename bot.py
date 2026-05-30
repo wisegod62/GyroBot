@@ -11,7 +11,6 @@ load_dotenv()
 
 DISCORD_BOT_TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 PROFILE_FILE = "user_profiles.json"
-BLACKLIST_FILE = "blacklist.json"
 
 # Load saved profiles on startup, or create an empty dictionary
 if os.path.exists(PROFILE_FILE):
@@ -19,22 +18,12 @@ if os.path.exists(PROFILE_FILE):
         user_profiles = json.load(f)
 else:
     user_profiles = {}
-
-if os.path.exists(BLACKLIST_FILE):
-    with open(BLACKLIST_FILE, "r") as f:
-        blacklist = json.load(f)
-else:
-    blacklist = {}
-
+i
 
 def save_profiles():
     """Helper to write profile data to the disk safely."""
     with open(PROFILE_FILE, "w") as f:
         json.dump(user_profiles, f, indent=4)
-
-def save_blacklist():
-    with open(BLACKLIST_FILE, "w") as f:
-        json.dump(blacklist, f, indent=4)
 
 class MyBot(discord.Client):
 
@@ -53,15 +42,6 @@ class MyBot(discord.Client):
 
 
 bot = MyBot()
-
-blacklist_group = app_commands.Group(
-    name="blacklist",
-    description="Manage the blacklist"
-    default_permissions=discord.Permissions(
-        manage_guild=True
-)
-    
-bot.tree.add_command(blacklist_group)
 
 # --- AUTOCOMPLETE HELPERS ---
 
@@ -296,84 +276,6 @@ async def update_profile(
     await interaction.response.send_message(
         "✅ Your identity profile card has been successfully updated!",
         ephemeral=True,
-    )
-
-# --- BLACKLIST SYSTEM ---
-
-@blacklist_group.command(
-    name="view",
-    description="View the blacklist"
-)
-async def blacklist_view(interaction: discord.Interaction):
-
-    if not blacklist:
-        await interaction.response.send_message(
-            "Nobody is currently blacklisted."
-        )
-        return
-
-    embed = discord.Embed(
-        title="🚫 Blacklist",
-        color=0xFF0000
-    )
-
-    for user_id, data in blacklist.items():
-        embed.add_field(
-            name=data["username"],
-            value=f"Reason: {data['reason']}",
-            inline=False
-        )
-
-    await interaction.response.send_message(embed=embed)
-
-@blacklist_group.command(name="add")
-@app_commands.checks.has_permissions(manage_guild=True)
-@app_commands.describe(
-    user="User to add to the blacklist",
-    reason="Reason for blacklisting"
-)
-async def blacklist_add(
-    interaction: discord.Interaction,
-    user: discord.Member,
-    reason: str
-):
-    user_id = str(user.id)
-
-    blacklist[user_id] = {
-        "username": user.name,
-        "reason": reason
-    }
-
-    save_blacklist()
-
-    await interaction.response.send_message(
-        f"🚫 {user.mention} has been added to the blacklist.\nReason: {reason}"
-    )
-
-@blacklist_group.command(name="remove")
-@app_commands.checks.has_permissions(manage_guild=True)
-@app_commands.describe(
-    user="User to remove from the blacklist"
-)
-async def blacklist_remove(
-    interaction: discord.Interaction,
-    user: discord.Member
-):
-    user_id = str(user.id)
-
-    if user_id not in blacklist:
-        await interaction.response.send_message(
-            f"❌ {user.mention} is not on the blacklist.",
-            ephemeral=True
-        )
-        return
-
-    del blacklist[user_id]
-
-    save_blacklist()
-
-    await interaction.response.send_message(
-        f"✅ {user.mention} has been removed from the blacklist."
     )
 
 # Start the bot
