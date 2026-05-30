@@ -86,7 +86,7 @@ async def queer_history_autocomplete(
 from PIL import Image, ImageDraw
 import io
 
-async def flags_autocomplete(
+async def flag_autocomplete(
     interaction: discord.Interaction, current: str
 ) -> list[app_commands.Choice[str]]:
     return [
