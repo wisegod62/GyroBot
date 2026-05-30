@@ -192,10 +192,30 @@ async def flag_lookup(interaction: discord.Interaction, flag: str):
 
     # Build embed
     embed = discord.Embed(
-        title=f"🏳️ {flag.title()} Flag",
-        description=data.get("description", "No description available."),
-        color=0x9B59B6
+    	title=f"🏳️ {flag.title()} Flag",
+	    description=data["description"],
+    	color=0x9B59B6
     )
+
+    embed.add_field(
+	    name="Creator",
+	    value=data.get("creator", "Unknown"),
+	    inline=True
+    )
+
+    embed.add_field(
+	    name="Year",
+	    value=data.get("year", "Unknown"),
+	    inline=True
+    )
+
+    aliases = data.get("aliases", [])
+    if aliases:
+    	embed.add_field(
+    		name="Also Known As",
+    		value=", ".join(aliases),
+    		inline=False
+    	)
 
     embed.set_image(url="attachment://flag.png")
 
