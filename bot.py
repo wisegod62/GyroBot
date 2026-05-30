@@ -18,7 +18,6 @@ if os.path.exists(PROFILE_FILE):
         user_profiles = json.load(f)
 else:
     user_profiles = {}
-i
 
 def save_profiles():
     """Helper to write profile data to the disk safely."""
