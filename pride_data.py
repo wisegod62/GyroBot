@@ -316,7 +316,7 @@ FLAGS = {
             {
                 "type": "rect",
                 "x": 0,
-                "y": 225,
+                "y": 250,
                 "width": 900,
                 "height": 100,
                 "fill": "#6E0170"
@@ -325,7 +325,7 @@ FLAGS = {
             {
                 "type": "rect",
                 "x": 0,
-                "y": 375,
+                "y": 350,
                 "width": 900,
                 "height": 250,
                 "fill": "#D2D2D2"
