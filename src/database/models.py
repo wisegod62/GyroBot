@@ -17,6 +17,4 @@ class Profile(Base):
 
     interests = Column(String, default="Not Set")
 
-    flag = Column(String, default="Not Set")
-
     card_color = Column(Integer, default=0x5865F2)
