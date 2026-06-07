@@ -21,7 +21,7 @@ class GyroBot(commands.Bot):
 
         await self.load_extension("src.cogs.practice")
 
-        await self.load_extension("src.cogs.flags")
+        await self.load_extension("src.cogs.about")
 
         commands = await self.tree.sync()
 
