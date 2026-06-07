@@ -4,6 +4,7 @@ from discord import app_commands
 import discord
 
 from src.services.profile_service import ProfileService
+from src.ui.profile_modal import ProfileModal
 
 
 class Profiles(commands.Cog):
@@ -37,8 +38,6 @@ class Profiles(commands.Cog):
             name="Interests", value=profile.interests or "Not Set", inline=False
         )
 
-        embed.add_field(name="Flag", value=profile.flag or "Not Set", inline=False)
-
         return embed
 
     async def update_profile_field(self, interaction, field: str, value: str):
@@ -49,39 +48,21 @@ class Profiles(commands.Cog):
             f"{field.title()} updated.", ephemeral=True
         )
 
-    @profile_group.command(name="view", description="View your profile")
-    async def view(self, interaction):
+    @profile_group.command(name="view", description="View a profile")
+    async def view(self, interaction, member: discord.Member | None = None):
+        target = member or interaction.user
 
+        profile = self.profile_service.get_or_create_profile(target.id)
+
+        await interaction.response.send_message(embed=self.build_embed(target, profile))
+
+    @profile_group.command(name="edit", description="Edit your profile")
+    async def edit(self, interaction):
         profile = self.profile_service.get_or_create_profile(interaction.user.id)
 
-        await interaction.response.send_message(
-            embed=self.build_embed(interaction.user, profile)
+        await interaction.response.send_modal(
+            ProfileModal(self.profile_service, interaction.user.id, profile)
         )
-
-    @profile_group.command(name="pronouns", description="Set your pronouns")
-    async def pronouns(self, interaction, pronouns: str):
-
-        await self.update_profile_field(interaction, "pronouns", pronouns)
-
-    @profile_group.command(name="bio", description="Set your bio")
-    async def bio(self, interaction, bio: str):
-
-        await self.update_profile_field(interaction, "bio", bio)
-
-    @profile_group.command(name="gender", description="Set your gender")
-    async def gender(self, interaction, gender: str):
-
-        await self.update_profile_field(interaction, "gender", gender)
-
-    @profile_group.command(name="sexuality", description="Set your sexuality")
-    async def sexuality(self, interaction, sexuality: str):
-
-        await self.update_profile_field(interaction, "sexuality", sexuality)
-
-    @profile_group.command(name="interests", description="Set your interests")
-    async def interests(self, interaction, interests: str):
-
-        await self.update_profile_field(interaction, "interests", interests)
 
 
 async def setup(bot):
