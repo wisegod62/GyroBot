@@ -19,7 +19,7 @@ class About(commands.Cog):
             value="[Repository](https://github.com/wisegod62/GyroBot)",
             inline=False,
         )
-        embed.add_field(name="Version", value="1.0.0", inline=True)
+        embed.add_field(name="Version", value="0.2.0", inline=True)
         embed.add_field(name="Author", value="wisegod62", inline=True)
         embed.set_footer(text="Made with discord.py")
 
