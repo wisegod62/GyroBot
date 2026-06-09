@@ -18,3 +18,5 @@ class Profile(Base):
     interests = Column(String, default="Not Set")
 
     card_color = Column(Integer, default=0x5865F2)
+
+    badges = Column(String, default="")

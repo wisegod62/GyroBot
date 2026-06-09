@@ -1,57 +1,44 @@
 import discord
 
 
-class ProfileModal(discord.ui.Modal, title="Edit Profile"):
-    def __init__(self, profile_service, user_id, profile):
-        super().__init__()
+class ProfileEditModal(discord.ui.Modal):
+    def __init__(self, profile_service, user_id, profile, fields):
+        super().__init__(title="Edit Profile")
 
         self.profile_service = profile_service
         self.user_id = user_id
+        self.fields = fields
 
-        self.pronouns = discord.ui.TextInput(
-            label="Pronouns", default=profile.pronouns, required=False, max_length=50
-        )
+        self.inputs = {}
 
-        self.gender = discord.ui.TextInput(
-            label="Gender", default=profile.gender, required=False, max_length=50
-        )
+        for field in fields:
+            if field == "card_color":
+                default = f"#{profile.card_color:06X}"
+            else:
+                default = str(getattr(profile, field))
+            input_box = discord.ui.TextInput(
+                label=field.replace("_", " ").title(),
+                default=default,
+                required=False,
+                style=(
+                    discord.TextStyle.paragraph
+                    if field in ["bio", "interests"]
+                    else discord.TextStyle.short
+                ),
+            )
 
-        self.sexuality = discord.ui.TextInput(
-            label="Sexuality", default=profile.sexuality, required=False, max_length=50
-        )
+            self.inputs[field] = input_box
 
-        self.interests = discord.ui.TextInput(
-            label="Interests", default=profile.interests, required=False, max_length=200
-        )
+            self.add_item(input_box)
 
-        self.bio = discord.ui.TextInput(
-            label="Bio",
-            default=profile.bio,
-            required=False,
-            style=discord.TextStyle.paragraph,
-            max_length=500,
-        )
+    async def on_submit(self, interaction):
 
-        self.add_item(self.pronouns)
-        self.add_item(self.gender)
-        self.add_item(self.sexuality)
-        self.add_item(self.interests)
-        self.add_item(self.bio)
+        for field, input_box in self.inputs.items():
+            value = input_box.value
 
-    async def on_submit(self, interaction: discord.Interaction):
+            if field == "card_color":
+                value = self.profile_service.parse_color(value)
 
-        self.profile_service.update_field(self.user_id, "pronouns", str(self.pronouns))
-
-        self.profile_service.update_field(self.user_id, "gender", str(self.gender))
-
-        self.profile_service.update_field(
-            self.user_id, "sexuality", str(self.sexuality)
-        )
-
-        self.profile_service.update_field(
-            self.user_id, "interests", str(self.interests)
-        )
-
-        self.profile_service.update_field(self.user_id, "bio", str(self.bio))
+            self.profile_service.update_field(self.user_id, field, value)
 
         await interaction.response.send_message("Profile updated.", ephemeral=True)

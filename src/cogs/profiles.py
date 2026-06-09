@@ -4,11 +4,17 @@ from discord import app_commands
 import discord
 
 from src.services.profile_service import ProfileService
-from src.ui.profile_modal import ProfileModal
+from src.ui.profile_modal import ProfileEditModal
+from src.ui.badge_view import BadgeView
+
+from src.constants.badges import BADGES
 
 
 class Profiles(commands.Cog):
     profile_group = app_commands.Group(name="profile", description="Profile commands")
+    edit_group = app_commands.Group(name="edit", description="Edit your profile")
+
+    profile_group.add_command(edit_group)
 
     def __init__(self, bot):
         self.bot = bot
@@ -38,6 +44,15 @@ class Profiles(commands.Cog):
             name="Interests", value=profile.interests or "Not Set", inline=False
         )
 
+        if profile.badges:
+            badge_text = []
+
+            for badge in profile.badges.split(","):
+                if badge in BADGES:
+                    badge_text.append(BADGES[badge])
+
+            embed.add_field(name="Badges", value="\n".join(badge_text), inline=False)
+
         return embed
 
     async def update_profile_field(self, interaction, field: str, value: str):
@@ -56,12 +71,54 @@ class Profiles(commands.Cog):
 
         await interaction.response.send_message(embed=self.build_embed(target, profile))
 
-    @profile_group.command(name="edit", description="Edit your profile")
-    async def edit(self, interaction):
+    @edit_group.command(name="identity", description="Edit identity information")
+    async def identity(self, interaction):
         profile = self.profile_service.get_or_create_profile(interaction.user.id)
 
         await interaction.response.send_modal(
-            ProfileModal(self.profile_service, interaction.user.id, profile)
+            ProfileEditModal(
+                self.profile_service,
+                interaction.user.id,
+                profile,
+                ["pronouns", "gender", "sexuality"],
+            )
+        )
+
+    @edit_group.command(name="about", description="Edit bio and interests")
+    async def about(self, interaction):
+        profile = self.profile_service.get_or_create_profile(interaction.user.id)
+
+        await interaction.response.send_modal(
+            ProfileEditModal(
+                self.profile_service,
+                interaction.user.id,
+                profile,
+                ["bio", "interests"],
+            )
+        )
+
+    @edit_group.command(name="appearance", description="Edit profile appearance")
+    async def appearance(self, interaction):
+        profile = self.profile_service.get_or_create_profile(interaction.user.id)
+
+        await interaction.response.send_modal(
+            ProfileEditModal(
+                self.profile_service,
+                interaction.user.id,
+                profile,
+                ["card_color"],
+            )
+        )
+
+    @edit_group.command(name="badges", description="Edit your badges")
+    async def badges(self, interaction):
+
+        profile = self.profile_service.get_or_create_profile(interaction.user.id)
+
+        await interaction.response.send_message(
+            "Choose your badges:",
+            view=BadgeView(self.profile_service, interaction.user.id, profile),
+            ephemeral=True,
         )
 
 
