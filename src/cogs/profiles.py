@@ -7,7 +7,7 @@ from src.services.profile_service import ProfileService
 from src.ui.profile_modal import ProfileEditModal
 from src.ui.badge_view import BadgeView
 
-from src.constants.badges import BADGES
+from src.constants.badges import BADGES, SELECTABLE_BADGES
 
 
 class Profiles(commands.Cog):
@@ -45,13 +45,17 @@ class Profiles(commands.Cog):
         )
 
         if profile.badges:
-            badge_text = []
+            selected = profile.badges.split(",") if profile.badges else []
 
-            for badge in profile.badges.split(","):
-                if badge in BADGES:
-                    badge_text.append(BADGES[badge])
+            display_badges = [
+                BADGES.get(badge.strip(), badge.strip()) for badge in selected
+            ]
 
-            embed.add_field(name="Badges", value="\n".join(badge_text), inline=False)
+            embed.add_field(
+                name="Badges",
+                value="\n".join(display_badges) if display_badges else "None",
+                inline=False,
+            )
 
         return embed
 
@@ -67,6 +71,8 @@ class Profiles(commands.Cog):
     async def view(self, interaction, member: discord.Member | None = None):
         target = member or interaction.user
 
+        profile = self.profile_service.get_or_create_profile(target.id)
+        self.profile_service.check_automatic_badges(target)
         profile = self.profile_service.get_or_create_profile(target.id)
 
         await interaction.response.send_message(embed=self.build_embed(target, profile))

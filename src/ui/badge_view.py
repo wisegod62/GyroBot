@@ -1,31 +1,27 @@
 import discord
 
-from src.constants.badges import BADGES
+from src.constants.badges import BADGES, SELECTABLE_BADGES
 
 
 class BadgeSelect(discord.ui.Select):
     def __init__(self, profile_service, user_id, profile):
         self.profile_service = profile_service
         self.user_id = user_id
+        self.profile = profile
 
-        current_badges = []
+        current_badges = profile.badges.split(",") if profile.badges else []
 
-        if profile.badges:
-            current_badges = profile.badges.split(",")
-
-        options = []
-
-        for badge_name, badge_display in BADGES.items():
-            options.append(
-                discord.SelectOption(
-                    label=badge_name,
-                    description=badge_display,
-                    default=badge_name in current_badges,
-                )
+        options = [
+            discord.SelectOption(
+                label=BADGES[badge],
+                value=badge,
+                default=badge in current_badges,
             )
+            for badge in SELECTABLE_BADGES
+        ]
 
         super().__init__(
-            placeholder="Choose your badges",
+            placeholder="Select your badges...",
             min_values=0,
             max_values=len(options),
             options=options,

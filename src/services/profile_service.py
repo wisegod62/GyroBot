@@ -67,3 +67,25 @@ class ProfileService:
 
             session.merge(profile)
             session.commit()
+
+    def add_badge(self, user_id, badge):
+        with SessionLocal() as session:
+            profile = session.get(Profile, user_id)
+
+            badges = profile.badges.split(",") if profile.badges else []
+
+            if badge not in badges:
+                badges.append(badge)
+
+            profile.badges = ",".join(badges)
+
+            session.commit()
+
+    def check_automatic_badges(self, member):
+        if member.guild_permissions.administrator:
+            self.add_badge(member.id, "Admin")
+
+        if member.id == 1210721923319865424:  # Me yay
+            self.add_badge(member.id, "Owner")
+
+        self.add_badge(member.id, "Early User")
