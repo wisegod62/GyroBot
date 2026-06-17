@@ -4,7 +4,6 @@ from discord.ext import commands
 
 from src.config import DISCORD_TOKEN
 from src.database.database import engine, Base
-from src.database.models import Profile
 
 Base.metadata.create_all(bind=engine)
 
@@ -22,6 +21,8 @@ class GyroBot(commands.Bot):
         await self.load_extension("src.cogs.practice")
 
         await self.load_extension("src.cogs.about")
+
+        await self.load_extension("src.cogs.resources")
 
         commands = await self.tree.sync()
 
