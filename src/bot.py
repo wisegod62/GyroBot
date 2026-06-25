@@ -16,8 +16,6 @@ class GyroBot(commands.Bot):
 
         await self.load_extension("src.cogs.profiles")
 
-        await self.load_extension("src.cogs.journal")
-
         await self.load_extension("src.cogs.practice")
 
         await self.load_extension("src.cogs.about")
